@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name="FrontController", urlPatterns={"/"})
+import action.ActionBase;
+import action.UnknownAction;
+import constants.ForwardConst;
+
+@WebServlet("/")
 public class FrontController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -17,11 +22,43 @@ public class FrontController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ActionBase action = getAction(request, response);
+
+        action.init(getServletContext(), request, response);
+
+        action.process();
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
+    }
+
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private ActionBase getAction(HttpServletRequest request, HttpServletResponse response) {
+        Class type = null;
+        ActionBase action = null;
+
+        try {
+
+            //リクエストからパラメータ"action"の値を取得 (例:"Employee"、"Report")
+            String actionString = request.getParameter(ForwardConst.ACT.getValue());
+
+            //パラメータを元にそのクラスのインスタンスを作成
+            type = Class.forName(String.format("actions.%sAction", actionString));
+
+            //ActionBaseのオブジェクトにキャスト(例:actions.EmployeeActionオブジェクト→actions.ActionBaseオブジェクト)
+            action = (ActionBase) (type.asSubclass(ActionBase.class)
+                    .getDeclaredConstructor()
+                    .newInstance());
+
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SecurityException
+                | IllegalArgumentException | InvocationTargetException| NoSuchMethodException e) {
+
+            action = new UnknownAction();
+
+        }
+        return action;
     }
 
 }
