@@ -7,7 +7,7 @@ import constants.AttributeConst;
 import constants.JpaConst;
 import models.Employee;
 
-//  入力値からDB
+//  入力値からDBに変換してインスタンスを返す
 public class EmployeeConverter {
     public static Employee toModel (EmployeeView ev) {
 
@@ -33,7 +33,7 @@ public class EmployeeConverter {
 
 
 
-    //DBから入力
+    //DBから入力に変換してインスタンスを返す
     public static EmployeeView toView(Employee e) {
         if(e == null) {
             return null;
