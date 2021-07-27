@@ -20,6 +20,12 @@ public abstract class ActionBase {
     protected HttpServletRequest request;
     protected HttpServletResponse response;
 
+    /*
+     *  初期化処理
+     *  @param servletContext
+     *  @param servletRequest
+     *  @param servletresponse
+     */
     public void init(
             ServletContext context,
             HttpServletRequest request,
@@ -31,8 +37,15 @@ public abstract class ActionBase {
 
     }
 
+    /*
+     * フロントコントローラーから呼び出されるメソッド
+     */
     public abstract void process() throws ServletException, IOException;
 
+
+    /*
+     * パラメータcommandに該当するメソッドを実行する
+     */
     protected void invoke() throws ServletException, IOException{
         Method commandMethod;
 
@@ -49,6 +62,10 @@ public abstract class ActionBase {
         }
     }
 
+
+    /*
+     *  指定されたjspファイルを呼び出す
+     */
     protected void forward(ForwardConst target) throws ServletException,IOException{
         String forward = String.format("/WEB-INF/views/%s.jsp", target.getValue());
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
@@ -56,6 +73,10 @@ public abstract class ActionBase {
 
     }
 
+
+    /*
+     * 引数からURLを作り、リダイレクトを行う
+     */
     protected void redirect(ForwardConst action, ForwardConst command)
             throws ServletException, IOException{
 
@@ -69,6 +90,11 @@ public abstract class ActionBase {
 
     }
 
+
+    /*
+     * token不正の場合はfalseを返し、エラー画面を表示
+     * 不正が無い場合はtrueを返す
+     */
     protected boolean cheakToken() throws ServletException, IOException{
 
         String _token = getRequestParam(AttributeConst.TOKEN);
@@ -84,11 +110,17 @@ public abstract class ActionBase {
     }
 
 
-
+    /*
+     * セッションIDを取得する
+     */
     protected String getTokenId() {
         return request.getSession().getId();
     }
 
+    /*
+     * パラメータで指定されたページ数を返す
+     * パラメータの指定が無い場合は１を返す
+     */
     protected int getPage() {
         int page;
         page = toNumber(request.getParameter(AttributeConst.PAGE.getValue()));
@@ -98,6 +130,11 @@ public abstract class ActionBase {
         return page;
     }
 
+
+    /*
+     * 文字列を数値に変換する
+     * 文字列が数値に変換できない場合はInteger.MIN_VALUEを返す
+     */
     protected int toNumber(String strNumber) {
         int number = 0;
 
@@ -109,6 +146,10 @@ public abstract class ActionBase {
         return number;
     }
 
+    /*
+     * 文字列をLocalDateに変換する
+     * 文字列が空白の場合は現在時刻を返す
+     */
     protected LocalDate toLocalDate(String strDate) {
         if(strDate == null || strDate.equals("")) {
             return LocalDate.now();
@@ -116,6 +157,9 @@ public abstract class ActionBase {
         return LocalDate.parse(strDate);
     }
 
+    /*
+     * 指定されたパラメータからrequestスコープの値を取得する
+     */
     protected String getRequestParam(AttributeConst key) {
         return request.getParameter(key.getValue());
     }
