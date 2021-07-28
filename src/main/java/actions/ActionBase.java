@@ -95,7 +95,7 @@ public abstract class ActionBase {
      * token不正の場合はfalseを返し、エラー画面を表示
      * 不正が無い場合はtrueを返す
      */
-    protected boolean cheakToken() throws ServletException, IOException{
+    protected boolean checkToken() throws ServletException, IOException{
 
         String _token = getRequestParam(AttributeConst.TOKEN);
 

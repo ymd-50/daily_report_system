@@ -10,7 +10,7 @@
     <c:param name="content">
         <h2>従業員 新規登録ページ</h2>
 
-        <form method="post" action="<c:url value='?action=${action}&command=${commCre}'/>">
+        <form method="post" action="<c:url value='?action=${action}&command=${commCrt}'/>">
             <c:import url="_form.jsp"/>
         </form>
 
