@@ -137,7 +137,6 @@ public abstract class ActionBase {
      */
     protected int toNumber(String strNumber) {
         int number = 0;
-        System.out.println(strNumber);
         try {
             number = Integer.parseInt(strNumber);
         } catch (Exception e) {
