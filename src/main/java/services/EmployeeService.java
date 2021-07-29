@@ -162,9 +162,11 @@ public class EmployeeService extends ServiceBase {
     public Boolean validateLogin(String code, String plainpass, String pepper) {
 
         boolean isValidateEmployee = false;
-        if(code != null && code.equals("") && plainpass != null && plainpass.equals("")) {
+        
+        if(code != null && !code.equals("") && plainpass != null && !plainpass.equals("")) {
+            
             EmployeeView ev = findOne(code, plainpass, pepper);
-
+            
             if(ev != null && ev.getId() != null) {
                 isValidateEmployee = true;
             }

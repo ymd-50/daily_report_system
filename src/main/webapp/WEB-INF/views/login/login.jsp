@@ -28,7 +28,7 @@
             <br><br>
 
             <label for="${AttributeConst.EMP_PASS.getValue()}">パスワード</label><br>
-            <input type="text" name="${AttributeConst.EMP_PASS.getValue()}" />
+            <input type="password" name="${AttributeConst.EMP_PASS.getValue()}" />
             <br><br>
 
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}"/>
