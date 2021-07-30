@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import action.views.EmployeeConverter;
-import action.views.EmployeeView;
+import actions.views.EmployeeConverter;
+import actions.views.EmployeeView;
 import constants.JpaConst;
 import models.Employee;
 import models.validators.EmployeeValidator;
@@ -162,11 +162,11 @@ public class EmployeeService extends ServiceBase {
     public Boolean validateLogin(String code, String plainpass, String pepper) {
 
         boolean isValidateEmployee = false;
-        
+
         if(code != null && !code.equals("") && plainpass != null && !plainpass.equals("")) {
-            
+
             EmployeeView ev = findOne(code, plainpass, pepper);
-            
+
             if(ev != null && ev.getId() != null) {
                 isValidateEmployee = true;
             }

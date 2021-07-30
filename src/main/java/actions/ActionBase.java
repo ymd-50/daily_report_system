@@ -56,7 +56,7 @@ public abstract class ActionBase {
             commandMethod.invoke(this, new Object[0]);
         } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-            System.err.println(e.getCause());
+            System.err.println("error->" + e.getCause());
             forward(ForwardConst.FW_ERR_UNKNOWN);
 
         }

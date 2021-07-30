@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 
-import action.views.EmployeeView;
+import actions.views.EmployeeView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.MessageConst;
@@ -28,7 +28,7 @@ public class AuthAction extends ActionBase {
         putRequestScope(AttributeConst.TOKEN, getTokenId());
 
         String flash = getSessionScope(AttributeConst.FLUSH);
-
+        System.out.println("login");
         if(flash != null) {
             putRequestScope(AttributeConst.FLUSH, flash);
             removeSessionScope(AttributeConst.FLUSH);
@@ -49,9 +49,9 @@ public class AuthAction extends ActionBase {
             if(checkToken()) {
                 EmployeeView ev = service.findOne(code, plainPass, pepper);
 
-                putRequestScope(AttributeConst.LOGIN_EMP, ev);
+                putSessionScope(AttributeConst.LOGIN_EMP, ev);
 
-                putRequestScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
 
                 redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
 
@@ -64,8 +64,17 @@ public class AuthAction extends ActionBase {
             putRequestScope(AttributeConst.LOGIN_ERR, true);
 
             forward(ForwardConst.FW_LOGIN);
-            
+
         }
     }
+
+    public void logout() throws ServletException, IOException {
+        removeSessionScope(AttributeConst.LOGIN_EMP);
+
+        putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGOUT.getMessage());
+
+        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
+    }
+
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
-import action.views.EmployeeView;
+import actions.views.EmployeeView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
