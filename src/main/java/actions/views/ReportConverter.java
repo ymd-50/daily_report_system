@@ -5,7 +5,7 @@ import java.util.List;
 
 import models.Report;
 
-public class RportConverter {
+public class ReportConverter {
     public static Report toModel(ReportView rv) {
         return new Report(
                 rv.getId(),
