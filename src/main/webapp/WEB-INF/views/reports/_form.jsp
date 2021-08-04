@@ -22,6 +22,10 @@
 <c:out value="${sessionScope.login_employee.name}"/>
 <br><br>
 
+<label for="${AttributeConst.REP_TITLE.getValue()}">タイトル</label><br>
+<input type="text" name="${AttributeConst.REP_TITLE.getValue()}"  value="<c:out value='${report.title}'/>"/>
+<br><br>
+
 <label for="${AttributeConst.REP_CONTENT.getValue()}">内容</label><br>
 <textarea name="${AttributeConst.REP_CONTENT.getValue()}" rows="10" cols="50" ><c:out value="${report.content}"/></textarea>
 <br><br>
