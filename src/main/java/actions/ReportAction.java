@@ -110,5 +110,25 @@ public class ReportAction extends ActionBase {
         }
     }
 
+    public void edit() throws ServletException, IOException{
+        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+        if(rv == null || !rv.getEmployee().getId().equals(ev.getId())) {
+            forward(ForwardConst.FW_ERR_UNKNOWN);
+        } else {
+            putRequestScope(AttributeConst.TOKEN, getTokenId());
+            putRequestScope(AttributeConst.REPORT, rv);
+
+            forward(ForwardConst.FW_REP_EDIT);
+        }
+
+    }
+
+    public void update() throws ServletException, IOException{
+
+    }
+
 
 }
